@@ -81,8 +81,6 @@ if __name__=='__main__' :
                 loss.backward()
                 optimizer.step()
                 optimizer.zero_grad()
-                break
-            break
 
     # Predictions for Artificial Neural Network model 
         log.info("ANN prediction procedure has started")
