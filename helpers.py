@@ -17,14 +17,14 @@ def interactions_as_embeddings(df):
     Transforms user-product interactions in a DataFrame into product embeddings.
     
     Args:
-        df: a Pandas DataFrame containing user-product interactions, with columns "sku" and "user_id".
+        df: a Pandas DataFrame containing user-product interactions, with columns "sku", "user_id" and "type".
         
     Returns:
         A DataFrame containing product embeddings, with columns "sku" and "embedding".
     """
     table = pd.pivot_table(df, values='type', index=["sku"],columns=['user_id'])
     table = table.fillna(0)
-    sparsity = sum((table == 0).astype(int).sum())/table.size
+    #sparsity = sum((table == 0).astype(int).sum())/table.size
     table["embedding"]=table.apply(lambda x: x.values,axis=1)
     product_embeddings = pd.DataFrame(table.to_records())[["sku","embedding"]]
     return product_embeddings
