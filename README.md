@@ -1,7 +1,11 @@
 # item_based_recommendation
 Item Based Recommender Systems Case Study for Data Scientist Interview
 
-This repository contains a code for a product recommendation system that uses various machine learning models to generate personalized recommendations for users. The models include Nearest Neighbor, Graph and Artificial Neural Network. It also provides the option to use Principal Component Analysis (PCA) to reduce the dimensionality of the data before using the Nearest Neighbor model.
+This repository contains a code for a product recommendation system that uses various machine learning models to generate personalized recommendations for users. The models include Nearest Neighbor, Graph and Artificial Neural Network. It also provides the option to use Principal Component Analysis (PCA) to reduce the dimensionality of the data before using the Nearest Neighbor model.Main idea behind project is, using various techniques to generate product2product recommendations.
+
+1-Using Co occurance matrix as product embeddings and using Nearest Neighbor algorithm to do recommendations.   
+2-Using Graph algorithm to recommend similar products using graph relationship  
+3-Using embedding based Neural Network to learn user-product embeddings and using Nearest Neighbor to recommend similar products  
 
 ## Getting Started
 
@@ -52,6 +56,8 @@ The code generates recommendations for each user in the dataset and saves them t
 
 The code was simplified and log functionality is removed, also modification of some hyperparameter and variables was done . I would recommend to check the code in that manner as well.
 
+## To Do's
+- Using Approximate Nearest Neighbor algorithms like Annoy or Faiss in order to recommend products in higher dimensions
 
 
 
