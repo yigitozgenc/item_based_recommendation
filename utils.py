@@ -48,7 +48,7 @@ def prepare_dataset(df):
     df = df.rename({"userId":"user_id","movieId":"sku","rating":"type"},axis=1)
     df = df.drop("timestamp",axis=1)
     df["type"] = df["type"].map(subtitude)
-    df.sku = "MYO-" + df.sku.astype(str)
+    df.sku = "VIV-" + df.sku.astype(str)
     return df
 
 class InteractionDataset(Dataset):
