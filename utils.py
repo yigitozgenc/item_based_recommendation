@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 from urllib.request import urlopen
 from io import BytesIO
 from zipfile import ZipFile
@@ -13,10 +7,6 @@ from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 from torch import nn
 import torch
-
-
-# In[ ]:
-
 
 def download_and_unzip(url, extract_to='.'):
     """
@@ -33,10 +23,6 @@ def download_and_unzip(url, extract_to='.'):
     http_response = urlopen(url)
     zipfile = ZipFile(BytesIO(http_response.read()))
     zipfile.extractall(path=extract_to)
-
-
-# In[1]:
-
 
 def prepare_dataset(df):
     '''
@@ -64,10 +50,6 @@ def prepare_dataset(df):
     df["type"] = df["type"].map(subtitude)
     df.sku = "MYO-" + df.sku.astype(str)
     return df
-
-
-# In[ ]:
-
 
 class InteractionDataset(Dataset):
     """
@@ -106,10 +88,6 @@ class InteractionDataset(Dataset):
         label =  self.df.iloc[idx]["type"]
         return (user_id,product_sku),label
 
-
-# In[2]:
-
-
 def get_ann_loader(df,batch_size):
     """
     Creates a dataset and data loader for training an ANN model.
@@ -125,10 +103,3 @@ def get_ann_loader(df,batch_size):
     dataset = InteractionDataset(df)
     train_dataloader = DataLoader(dataset, batch_size, shuffle=True)
     return dataset, train_dataloader
-
-
-# In[ ]:
-
-
-
-

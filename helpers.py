@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[3]:
-
-
 from urllib.request import urlopen
 from io import BytesIO
 from zipfile import ZipFile
@@ -17,10 +11,6 @@ from torch import nn
 import torch
 import torch.optim as optim
 import networkx as nx
-
-
-# In[4]:
-
 
 def interactions_as_embeddings(df):
     """
@@ -39,10 +29,6 @@ def interactions_as_embeddings(df):
     product_embeddings = pd.DataFrame(table.to_records())[["sku","embedding"]]
     return product_embeddings
 
-
-# In[5]:
-
-
 def map_indices_to_skus(index_series,index_dict):
     """
     Maps a series of indices to a series of SKUs using a provided mapping dictionary.
@@ -58,10 +44,6 @@ def map_indices_to_skus(index_series,index_dict):
     for i in index_series:
         sku_series.append(index_dict[i])
     return sku_series
-
-
-# In[6]:
-
 
 def generate_recommendations(indices,embeddings,index_dict):
     """
@@ -81,10 +63,6 @@ def generate_recommendations(indices,embeddings,index_dict):
     recommendations_skus = recommendation_df.drop("sku",axis=1).apply(lambda x: map_indices_to_skus(x,index_dict[0]),axis=0)
     final_recommendatons = embeddings.reset_index().merge(recommendations_skus.reset_index(),how="left",on = "index")[["sku",1,2,3,4,5,6,7,8,9,10]]
     return final_recommendatons
-
-
-# In[ ]:
-
 
 def transform_embeddings_with_kernel_pca(embeddings,n_components = 25,kernel = 'sigmoid'):
     """
@@ -108,10 +86,6 @@ def transform_embeddings_with_kernel_pca(embeddings,n_components = 25,kernel = '
     pca_embeddings = embeddings.rename(columns = {"embedding_y":"embedding"})
     return pca_embeddings
 
-
-# In[ ]:
-
-
 def generate_ann_embeddings(model,dataset,sku):
     """
     Returns the embedding for a product in a trained model.
@@ -128,10 +102,6 @@ def generate_ann_embeddings(model,dataset,sku):
     sku = dataset.vocab[dataset.vocab["sku"]==sku].index[0]
     embeddings = model.sku_embedding_layer(torch.tensor(sku)).cpu().detach().numpy()
     return embeddings
-
-
-# In[ ]:
-
 
 def get_ann_embeddings(model,df,dataset):
     """
@@ -150,10 +120,6 @@ def get_ann_embeddings(model,df,dataset):
     product_sku["embedding"] = product_sku.sku.apply(lambda x:generate_ann_embeddings(model,dataset,x))
     return product_sku
 
-
-# In[ ]:
-
-
 def create_graph(df):
     """
     Creates a graph from a DataFrame of user-product interactions.
@@ -167,10 +133,6 @@ def create_graph(df):
 
     return nx.convert_matrix.from_pandas_edgelist(df,'user_id','sku',edge_attr="type", create_using=nx.Graph())
 
-
-# In[ ]:
-
-
 def graph_relations(source,G_users):
     """
     Generates a list of recommended products based on the relations of a given user in a user-product interaction graph.
@@ -182,7 +144,6 @@ def graph_relations(source,G_users):
     Returns:
         list: A list of recommended product SKUs.
     """
-    commons_dict = {}
     commons_dict = {}
     for e in G_users.neighbors(source):
         for e2 in G_users.edges(e):

@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import pandas as pd
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
@@ -11,10 +5,6 @@ from sklearn.decomposition import PCA , KernelPCA
 from torch import nn
 import torch
 from helpers import graph_relations,create_graph
-
-
-# In[ ]:
-
 
 def find_nearest_neighbors(embeddings):
     """
@@ -31,10 +21,6 @@ def find_nearest_neighbors(embeddings):
     distances, indices = nbrs.kneighbors(embeddings.embedding.tolist())
     return indices, index_dict
 
-
-# In[ ]:
-
-
 def graph_recommendations(df):
     """
     Generates product recommendations based on a user-product interaction graph.
@@ -48,12 +34,14 @@ def graph_recommendations(df):
 
     G_users = create_graph(df)
     product_sku = pd.DataFrame(list(set(df.sku))).rename(columns={0:"sku"})
-    product_sku["embeddings"]=product_sku.sku.apply(lambda x: graph_relations(x,G_users))
+    product_sku["recommendations"]=product_sku.sku.apply(lambda x: graph_relations(x,G_users))
+    
+    for i in range(1,11):
+        product_sku[i] = product_sku.recommendations.apply(lambda x:x[i-1])
+    
+    product_sku.drop(columns = "recommendations",inplace=True)
+    
     return product_sku
-
-
-# In[ ]:
-
 
 class embedding_learning_model(nn.Module):
     """
@@ -92,23 +80,3 @@ class embedding_learning_model(nn.Module):
         concat = torch.cat([user_embedding, sku_embedding], dim=0).reshape(1,256)
         x = self.linear_relu_stack(concat)
         return x
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-

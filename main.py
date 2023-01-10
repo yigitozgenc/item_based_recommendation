@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 # Imports
 
 from utils import download_and_unzip,prepare_dataset,InteractionDataset,get_ann_loader
@@ -16,19 +10,11 @@ from torch import nn
 import torch
 import torch.optim as optim
 
-
-# In[2]:
-
-
 # Create and configure logger
 logging.basicConfig(level = logging.INFO)
 
 # Creating an object
 log = logging.getLogger()
-
-
-# In[3]:
-
 
 # Create Args
 parser = ArgumentParser()
@@ -40,11 +26,6 @@ parser.add_argument("--epoch", default=5, type=int)
 parser.add_argument("--learning_rate", default=0.001, type=float)
 
 args, unknown = parser.parse_known_args()
-
-
-
-# In[ ]:
-
 
 if __name__=='__main__' :
     
